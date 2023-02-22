@@ -56,12 +56,12 @@ func (r *Role) removeRole(role *Role) {
 	role.removeUser(r)
 }
 
-//should only be called inside addRole
+// should only be called inside addRole
 func (r *Role) addUser(user *Role) {
 	r.users.Store(user.name, user)
 }
 
-//should only be called inside removeRole
+// should only be called inside removeRole
 func (r *Role) removeUser(user *Role) {
 	r.users.Delete(user.name)
 }
@@ -292,7 +292,7 @@ func (rm *RoleManagerImpl) SetLogger(logger log.Logger) {
 
 // Clear clears all stored data and resets the role manager to the initial state.
 func (rm *RoleManagerImpl) Clear() error {
-	rm.matchingFuncCache = util.NewSyncLRUCache(100)
+	rm.matchingFuncCache = util.NewSyncLRUCache(1000)
 	rm.allRoles = &sync.Map{}
 	return nil
 }
@@ -493,10 +493,10 @@ func (dm *DomainManager) rebuild() {
 	})
 }
 
-//Clear clears all stored data and resets the role manager to the initial state.
+// Clear clears all stored data and resets the role manager to the initial state.
 func (dm *DomainManager) Clear() error {
 	dm.rmMap = &sync.Map{}
-	dm.matchingFuncCache = util.NewSyncLRUCache(100)
+	dm.matchingFuncCache = util.NewSyncLRUCache(1000)
 	return nil
 }
 
